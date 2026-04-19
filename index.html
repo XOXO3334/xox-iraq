@@ -85,20 +85,14 @@
 
     window.onload = () => {
     const saved = localStorage.getItem('myPhoto');
-    
-        // إذا لم توجد صورة محفوظة، اعرض الصورة التي رفعناها
-        img.src = 'xor.jpg.jpg';
-        img.style.display = 'block';
-        txt.style.display = if (saved) {
+    if (saved) {
         img.src = saved;
         img.style.display = 'block';
         txt.style.display = 'none';
     } else {
-        // هذا الجزء هو الذي سيشغل الصورة فوراً!
         img.src = 'xor.jpg.jpg';
         img.style.display = 'block';
         txt.style.display = 'none';
-    }'none';
     }
 };
 
