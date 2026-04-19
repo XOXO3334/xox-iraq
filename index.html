@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض الصور المتكامل</title>
+    <style>
+        /* التصميم والألوان */
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 { color: #d11d53; margin-bottom: 10px; } /* اللون الشلغمي */
+        p { color: #666; margin-bottom: 20px; }
+
+        /* حاوية الصورة بأبعاد 1080x1600 */
+        .image-frame {
+            width: 100%;
+            padding-top: 148.14%; /* نسبة الطول للعرض (1600/1080) */
+            position: relative;
+            border: 3px dashed #d11d53;
+            border-radius: 15px;
+            cursor: pointer;
+            overflow: hidden;
+            background: #fff9fa;
+            transition: 0.3s;
+        }
+
+        .image-frame:hover { background: #ffebee; }
+
+        .image-frame img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .placeholder-text {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #d11d53;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>رابطة ملحدين النجف</h1> 
+    <p>رابطة جمعيه ملحدي النجف بدعم شخصي من ملحدي السماوه </p>
+
+    <div class="image-frame" id="dropZone">
+        <span class="placeholder-text" id="text">انقر هنا لاختيار صورة</span>
+        <img id="displayImg" src="">
+    </div>
+
+    <input type="file" id="fileInput" hidden accept="image/*">
+</div>
+
+<script>
+    const zone = document.getElementById('dropZone');
+    const input = document.getElementById('fileInput');
+    const img = document.getElementById('displayImg');
+    const txt = document.getElementById('text');
+
+    // 1. استعادة الصورة عند فتح الصفحة
+    window.onload = () => {
+        const saved = localStorage.getItem('myPhoto');
+        if (saved) {
+            img.src = saved;
+            img.style.display = 'block';
+            txt.style.display = 'none';
+        }
+    };
+
+    // 2. فتح الاستوديو عند الضغط
+    zone.onclick = () => input.click();
+
+    // 3. عرض وحفظ الصورة
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const data = event.target.result;
+                img.src = data;
+                img.style.display = 'block';
+                txt.style.display = 'none';
+                localStorage.setItem('myPhoto', data); // حفظ داخلي
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+</script>
+
+</body>
+</html>
