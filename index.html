@@ -83,14 +83,19 @@
     const img = document.getElementById('displayImg');
     const txt = document.getElementById('text');
 
-    // 1. استعادة الصورة عند فتح الصفحة
     window.onload = () => {
-        const saved = localStorage.getItem('myPhoto');
-        if (saved) {
-            img.style.display = 'block';
-            txt.style.display = 'none';
-        }
-    };
+    const saved = localStorage.getItem('myPhoto');
+    if (saved) {
+        img.src = saved;
+        img.style.display = 'block';
+        txt.style.display = 'none';
+    } else {
+        // إذا لم توجد صورة محفوظة، اعرض الصورة التي رفعناها
+        img.src = 'xor.jpg.jpg';
+        img.style.display = 'block';
+        txt.style.display = 'none';
+    }
+};
 
     // 2. فتح الاستوديو عند الضغط
     zone.onclick = () => input.click();
